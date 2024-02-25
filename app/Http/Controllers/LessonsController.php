@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class LessonsController extends Controller
 {
@@ -17,7 +18,11 @@ class LessonsController extends Controller
         // 2. No way to attach metadata
         // 3. linking db structure to API output
         // 4. No way to signal headers/response codes
-        return Lesson::all();
+
+        $lessons = Lesson::all();
+        return Response::json([
+            'data' => $lessons->toArray()
+        ], 200);
     }
 
     /**
@@ -41,7 +46,19 @@ class LessonsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+
+        if (!$lesson) {
+            return Response::json([
+                'error' => [
+                    'message' => 'Lesson does not exist',
+                ]
+            ], 404);
+        }
+
+        return Response::json([
+            'data' => $lesson->toArray()
+        ], 200);
     }
 
     /**
