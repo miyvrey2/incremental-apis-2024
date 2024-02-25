@@ -19,6 +19,7 @@ class LessonFactory extends Factory
         return [
             'title' => str(fake()->sentence(5)),
             'body' => fake()->paragraph(4),
+            'some_bool' => fake()->boolean(),
         ];
     }
 }

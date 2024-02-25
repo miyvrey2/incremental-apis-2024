@@ -13,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Empty the lessons table
+        Lesson::truncate();
 
+        // Create 30 lessons
+        $lessons = Lesson::factory(30)
+                     ->create();
     }
 }
